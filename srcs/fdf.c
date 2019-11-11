@@ -5,98 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/25 13:16:52 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/09 23:27:16 by gbrandon         ###   ########.fr       */
+/*   Created: 2019/11/10 16:28:17 by gbrandon          #+#    #+#             */
+/*   Updated: 2019/11/11 07:54:38 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "fdf.h"
 
-int         keyz(int key, t_window *box)
+int			mouz(int button, int x, int y, t_container *box)
+{
+	ft_printf("button: %d\n", button);
+	ft_printf("x: %d\n", x);
+	ft_printf("y: %d\n", y);
+	if (button == 5)
+	{
+		box->tr->scale->x += box->tr->scale->x * 0.1;
+		box->tr->scale->y += box->tr->scale->y * 0.1;
+		box->tr->scale->z += box->tr->scale->z * 0.1;
+		mlx_clear_window(box->par->mx_ptr, box->par->wn_ptr);
+		fdf_sc_map(box->map, box->tr);
+		fdf_draw_map(box->par, box->map, box->tr);
+	}
+	if (button == 4)
+	{
+		box->tr->scale->x -= box->tr->scale->x * 0.1;
+		box->tr->scale->y -= box->tr->scale->y * 0.1;
+		box->tr->scale->z -= box->tr->scale->z * 0.1;
+		mlx_clear_window(box->par->mx_ptr, box->par->wn_ptr);
+		fdf_sc_map(box->map, box->tr);
+		fdf_draw_map(box->par, box->map, box->tr);
+	}
+	(void)box;
+	return (0);
+}
+
+int         keyz(int key, t_container *box)
 {
 	if (key == 53)
 	{
-		mlx_destroy_window(box->mx_ptr, box->wn_ptr);
+		mlx_destroy_window(box->par->mx_ptr, box->par->wn_ptr);
 		exit(0);
 	}
-    ft_putnbr(key);
+	if (key == 123)
+	{
+		box->tr->scale->y += 10;
+		mlx_clear_window(box->par->mx_ptr, box->par->wn_ptr);
+		fdf_draw_map(box->par, box->map, box->tr);
+	}
+	if (key == 124)
+	{
+		box->tr->scale->y -= 10;
+		mlx_clear_window(box->par->mx_ptr, box->par->wn_ptr);
+		fdf_draw_map(box->par, box->map, box->tr);
+	}
+	if (key == 125)
+	{
+		box->tr->start->x += 10;
+		mlx_clear_window(box->par->mx_ptr, box->par->wn_ptr);
+		fdf_draw_map(box->par, box->map, box->tr);
+	}
+	if (key == 126)
+	{
+		box->tr->start->x -= 10;
+		mlx_clear_window(box->par->mx_ptr, box->par->wn_ptr);
+		fdf_draw_map(box->par, box->map, box->tr);
+	}
+	
+    //ft_printf("%d\n", key);
     return (0);
 }
 
-int			main(void)
+int			main(int argc, char **argv)
 {
+	int			fd;
 	int			color;
+	t_bilist	*map;
 	t_window	*box;
-	t_point		*p0;
-	t_point		*p1;
-	t_line		*line;
+	t_transfrm	*tr;
+	t_container	*cntr;
 
-	box = init_tcont(NULL, NULL);
-	if (!(box->mx_ptr = mlx_init()))
-		return (-1);
-	if (!(box->wn_ptr = mlx_new_window(box->mx_ptr, 500, 500, "mlx")))
-		return (-1);
+	fd = fdf_arg_process(argc, argv);
 	color = make_clr(0, 255, 0);
-
-	p0 = init_tpoint(0, 0, color);
-	p1 = init_tpoint(500, 500, color);
-	if (!p0 || !p1)
-		return (0);
-	if (!(line = init_tline(p0, p1)))
-		return (0);
-	draw_line_bres(box, line);
-
-	line->p0->x=0;
-	line->p0->y=0;
-	line->p1->x=499;
-	line->p1->y=0;
-	draw_line_bres(box, line);
-
-	line->p0->x=499;
-	line->p0->y=0;
-	line->p1->x=499;
-	line->p1->y=499;
-	draw_line_bres(box, line);
-
-	line->p0->x=499;
-	line->p0->y=499;
-	line->p1->x=0;
-	line->p1->y=499;
-	draw_line_bres(box, line);
-
-	line->p0->x=0;
-	line->p0->y=499;
-	line->p1->x=0;
-	line->p1->y=0;
-	draw_line_bres(box, line);
-
-	line->p0->x=250;
-	line->p0->y=0;
-	line->p1->x=280;
-	line->p1->y=499;
-	draw_linew(box, line);
-
-	line->p0->x=280;
-	line->p0->y=0;
-	line->p1->x=310;
-	line->p1->y=499;
-	draw_line_bres(box, line);
-
-	/*line->p0->x=0;
-	line->p0->y=250;
-	line->p1->x=499;
-	line->p1->y=280;
-	draw_line_bres(box, line);
-
-	line->p0->x=250;
-	line->p0->y=245;
-	line->p1->x=250;
-	line->p1->y=255;
-	draw_linew(box, line);*/
-
-	mlx_key_hook(box->wn_ptr, keyz, box);
+	map = fdf_parsing(fd, color);
+	if (!(box = init_tcont(1000, 1000, "mlx")))
+		return (-1);
+	tr = init_transfrm(init_tpointz(500, 300, 200, 0), init_tpointz(30, 10, 10, 0));
+	fdf_sc_map(map, tr);
+	fdf_draw_map(box, map, tr);
+	cntr = init_container(box, map, tr);
+	mlx_key_hook(box->wn_ptr, keyz, cntr);
+	mlx_mouse_hook(box->wn_ptr, mouz, cntr);
 	mlx_loop(box->mx_ptr);
-
 	return (0);
 }
