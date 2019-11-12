@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:30:01 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 10:03:34 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 10:37:08 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int				keyz(int key, t_container *box)
 	if (key == 53)
 	{
 		mlx_destroy_window(box->par->mx_ptr, box->par->wn_ptr);
+		free(box->par->mx_ptr);
 		free_cntner(box);
 		exit(0);
 	}

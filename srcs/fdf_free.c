@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:11:50 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 10:10:27 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 12:16:28 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,17 @@ void	free_tab(char **tab)
 void	free_sbilist(t_bilist **pxar)
 {
 	t_pix_lst		*plxlst;
+	t_pix_lst		*plxtemp;
 	t_bilist		*tmp;
 
+	if (!pxar || !(*pxar))
+		return ;
+	if (!(*pxar)->head)
+	{
+		if ((*pxar)->data)
+			free_pxlst((*pxar)->data);
+		free(*pxar);
+	}
 	*pxar = (*pxar)->head;
 	while(*pxar)
 	{
@@ -42,8 +51,9 @@ void	free_sbilist(t_bilist **pxar)
 		{
 			if (plxlst->data)
 				free(plxlst->data);
-			free(plxlst);
+			plxtemp = plxlst;
 			plxlst = plxlst->next;
+			free(plxtemp);
 		}
 		tmp = *pxar;
 		*pxar = (*pxar)->next;

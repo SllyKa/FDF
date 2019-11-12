@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:23:26 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 09:26:47 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 12:34:17 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,15 @@ static t_pix_lst	*create_pxline(char **tab, int y, int color)
 	while (*tab)
 	{
 		z = ft_satoi(*tab, &er);
+		if (z > 3000)
+			z = 3000;
+		else if (z < -3000)
+			z = -3000;
 		if (er < 0)
+		{
+			free_pxlst(px_h);
 			return (NULL);
+		}
 		if (!(ptz = init_tpointz(x, y, z, color)))
 			return (NULL);
 		if (!(px_h = add_px_lst(&px_h, ptz)))
@@ -73,9 +80,10 @@ static t_bilist	*init_tpixlstar(t_bilist *pix_lst, char **tab, int y, int color)
 	if (!(new_pix_ar->data = create_pxline(tab, y, color)))
 	{
 		free_sbilist(&new_pix_ar);
+		free_sbilist(&pix_lst);
 		return (NULL);
 	}
-	new_pix_ar->s= new_pix_ar->data->data->x;
+	new_pix_ar->s = new_pix_ar->data->data->x;
 	new_pix_ar->data = new_pix_ar->data->head;
 	if (!pix_lst)
 	{
@@ -85,7 +93,11 @@ static t_bilist	*init_tpixlstar(t_bilist *pix_lst, char **tab, int y, int color)
 	else
 	{
 		if (pix_lst->s != new_pix_ar->s)
+		{
+			free_sbilist(&new_pix_ar);
+			free_sbilist(&pix_lst);
 			return (NULL);
+		}
 		new_pix_ar->head = pix_lst->head;
 		new_pix_ar->prev = pix_lst;
 		pix_lst->next = new_pix_ar;
@@ -108,7 +120,14 @@ t_bilist		*fdf_parsing(int fd, int color, int *y)
 	{
 		tab = ft_strsplit(line, ' ');
 		if (!(pixar = init_tpixlstar(pixar, tab, *y, color)))
+		{
+			free_tab(tab);
+			free(line);
+			line = NULL;
+			while (get_next_line(fd, &line) > 0)
+				free(line);
 			exit (0);
+		}
 		free_tab(tab);
 		free(line);
 		line = NULL;
@@ -116,5 +135,5 @@ t_bilist		*fdf_parsing(int fd, int color, int *y)
 	}
 	if (er < 0)
 		free(line);
-	return (pixar->head);
+	return (pixar);
 }

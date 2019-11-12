@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 21:11:37 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 01:58:51 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 12:53:57 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void			fdf_draw_map(t_window *par, t_bilist *map)
 				par_pxl = par_pxl->next;
 			}
 			pxl = pxl->next;
-			if (!pxl->next && par_pxl)
-				fill_n_draw(par, par_pxl->data, pxl->data);
 		}
+		if (!pxl->next && par_pxl)
+			fill_n_draw(par, par_pxl->data, pxl->data);
 		map = map->next;
 	}
 }

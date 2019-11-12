@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 11:16:36 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 02:01:15 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 13:05:51 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int				make_clr(unsigned char r, unsigned char g, unsigned char b)
 	return (clr);
 }
 
-static void		put_bold_px(t_window *par, int x, int y, int clr)
+void		put_bold_px(t_window *par, int x, int y, int clr)
 {
 	mlx_pixel_put(par->mx_ptr, par->wn_ptr, x + 1, y, clr);
 	mlx_pixel_put(par->mx_ptr, par->wn_ptr, x - 1, y, clr);
