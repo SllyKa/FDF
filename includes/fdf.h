@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:26:06 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 14:30:15 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 17:57:10 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_transfrm		*start_map(t_bilist *map, double y);
 void			reset_map(t_container *box);
 void			put_bold_px(t_window *par, int x, int y, int clr);
 t_pix_lst		*create_pxline(char **tab, int y, int color);
+int				ft_psatoi(const char *str, int *er_cod, char **lstpntr);
 
 int				mse_sc(int button, int x, int y, t_container *box);
 int				mse_rt_x(int button, int x, int y, t_container *box);
