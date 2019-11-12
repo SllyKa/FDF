@@ -6,14 +6,14 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:23:26 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/10 23:00:15 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:26:47 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
 
-static t_pix_lst	*add_px_lst(t_pix_lst **px_h, t_pointz *ptz)
+t_pix_lst	*add_px_lst(t_pix_lst **px_h, t_pointz *ptz)
 {
 	t_pix_lst	*new_px_lst;
 
@@ -94,44 +94,25 @@ static t_bilist	*init_tpixlstar(t_bilist *pix_lst, char **tab, int y, int color)
 	return (pix_lst);
 }
 
-static void		print_lst(t_bilist *lst)
-{
-	t_pix_lst	*pl;
-	//lst = lst->head;
-	while(lst)
-	{
-		pl = lst->data;
-		while (pl)
-		{
-			//ft_printf("x: %f | y: %f | z: %f\n", pl->data->x, pl->data->y, pl->data->z);
-			pl = pl->next;
-		}
-		lst = lst->next;
-	}
-}
-
-t_bilist		*fdf_parsing(int fd, int color)
+t_bilist		*fdf_parsing(int fd, int color, int *y)
 {
 	int			er;
-	int			y;
 	char		*line;
 	char		**tab;
 	t_bilist	*pixar;
 
-	y = 0;
+	*y = 0;
 	line = NULL;
 	pixar = NULL;
 	while ((er = get_next_line(fd, &line)) > 0)
-	//er = get_next_line(fd, &line);
 	{
 		tab = ft_strsplit(line, ' ');
-		if (!(pixar = init_tpixlstar(pixar, tab, y, color)))
+		if (!(pixar = init_tpixlstar(pixar, tab, *y, color)))
 			exit (0);
 		free_tab(tab);
 		free(line);
-		print_lst(pixar);
 		line = NULL;
-		y++;
+		(*y)++;
 	}
 	if (er < 0)
 		free(line);

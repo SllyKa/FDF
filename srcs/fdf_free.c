@@ -6,12 +6,13 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:11:50 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/11 03:56:04 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 10:10:27 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 void	free_tab(char **tab)
 {
@@ -36,9 +37,11 @@ void	free_sbilist(t_bilist **pxar)
 	while(*pxar)
 	{
 		plxlst = (*pxar)->data;
+		plxlst = plxlst->head;
 		while(plxlst)
 		{
-			free(plxlst->data);
+			if (plxlst->data)
+				free(plxlst->data);
 			free(plxlst);
 			plxlst = plxlst->next;
 		}
@@ -48,6 +51,36 @@ void	free_sbilist(t_bilist **pxar)
 		tmp = NULL;
 	}
 	*pxar = NULL;
+}
+
+void	free_cntner(t_container	*box)
+{
+	if (!box)
+		return ;
+	if (box->par)
+		free(box->par);
+	if (box->tr)
+	{
+		if (box->tr->map_cpy)
+			free_sbilist(&(box->tr->map_cpy));
+		free_stransfrm(&(box->tr));
+	}
+	if (box->map)
+		free_sbilist(&(box->map));
+	free(box);
+}
+
+void	free_stransfrm(t_transfrm **tr)
+{
+	if (!tr || !(*tr))
+		return ;
+	if ((*tr)->start)
+		free((*tr)->start);
+	if ((*tr)->scale)
+		free((*tr)->scale);
+	if ((*tr)->mvstep)
+		free((*tr)->mvstep);
+	free(*tr);
 }
 
 void	free_line(t_line *lne)

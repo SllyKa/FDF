@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 19:18:58 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/11 04:32:55 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 06:20:46 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,22 @@ t_bilist		*init_bilist(t_pix_lst *px_lst, size_t s)
 	return (new_bi);
 }
 
-t_transfrm		*init_transfrm(t_pointz *st, t_pointz *scale)
+t_transfrm		*init_transfrm(t_pointz *st, t_pointz *scale,
+t_pointz *mvstep, double angle)
 {
 	t_transfrm		*t;
 
 	t = (t_transfrm*)malloc(sizeof(t_transfrm));
 	t->scale = scale;
 	t->start = st;
+	t->mvstep = mvstep;
+	t->angle = angle;
+	t->map_cpy = NULL;
 	return (t);
 }
 
-t_container		*init_container(t_window *par, t_bilist *map, t_transfrm *tr)
+t_container		*init_container(t_window *par, t_bilist *map,
+t_transfrm *tr, double y)
 {
 	t_container		*cntr;
 
@@ -45,5 +50,6 @@ t_container		*init_container(t_window *par, t_bilist *map, t_transfrm *tr)
 	cntr->map = map;
 	cntr->par = par;
 	cntr->tr = tr;
+	cntr->y = y;
 	return (cntr);
 }
