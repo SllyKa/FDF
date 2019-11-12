@@ -6,14 +6,14 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 18:58:46 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/11 03:54:39 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:26:24 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "fdf.h"
 
-static t_pointz	*dif_ret(t_pointz *p0, t_pointz *p1, char isabs)
+static t_pointz		*dif_ret(t_pointz *p0, t_pointz *p1, char isabs)
 {
 	t_pointz		*pd;
 
@@ -28,18 +28,18 @@ static t_pointz	*dif_ret(t_pointz *p0, t_pointz *p1, char isabs)
 	return (pd);
 }
 
-static char		initswap(t_line **ln, t_pointz **pd, t_line *line)
+static char			initswap(t_line **ln, t_pointz **pd, t_line *line)
 {
 	char		isswap;
 	t_pointz	*p0;
 	t_pointz	*p1;
-	
-	if(!(p0 = init_tpointz(line->p0->x, line->p0->y, 0, line->p0->clr)))
-		exit (0);
-	if(!(p1 = init_tpointz(line->p1->x, line->p1->y, 0, line->p1->clr)))
-		exit (0);
-	if(!(*ln = init_tline(p0, p1)))
-		exit (0);	
+
+	if (!(p0 = init_tpointz(line->p0->x, line->p0->y, 0, line->p0->clr)))
+		exit(0);
+	if (!(p1 = init_tpointz(line->p1->x, line->p1->y, 0, line->p1->clr)))
+		exit(0);
+	if (!(*ln = init_tline(p0, p1)))
+		exit(0);
 	*pd = dif_ret(p0, p1, 0);
 	isswap = 0;
 	if (fabs((*pd)->x) < fabs((*pd)->y))
@@ -57,7 +57,7 @@ static char		initswap(t_line **ln, t_pointz **pd, t_line *line)
 	return (isswap);
 }
 
-static void		put_px_w(t_window *par, t_point *p, char isswap, double a)
+static void			put_px_w(t_window *par, t_point *p, char isswap, double a)
 {
 	int tmp;
 
@@ -79,7 +79,8 @@ static void		put_px_w(t_window *par, t_point *p, char isswap, double a)
 	}
 }
 
-static	t_line		*top_draw(t_line *line, char *isswap, double *grad, double *y)
+static	t_line		*top_draw(t_line *line, char *isswap,
+double *grad, double *y)
 {
 	t_pointz	*pd;
 	t_line		*ln;
@@ -99,7 +100,7 @@ static	t_line		*top_draw(t_line *line, char *isswap, double *grad, double *y)
 	return (ln);
 }
 
-void			draw_linew(t_window *par, t_line *line)
+void				draw_linew(t_window *par, t_line *line)
 {
 	t_line		*ln;
 	char		isswap;
@@ -110,7 +111,7 @@ void			draw_linew(t_window *par, t_line *line)
 	put_px_w(par, ln->pp0, isswap, 1);
 	put_px_w(par, ln->pp1, isswap, 1);
 	(ln->pp0->x)++;
-	while(ln->pp0->x <= ln->pp1->x - 1)
+	while (ln->pp0->x <= ln->pp1->x - 1)
 	{
 		ln->pp0->y = (int)y;
 		put_px_w(par, ln->pp0, isswap, 1 - (y - (int)y));

@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 20:09:54 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 08:42:41 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:08:12 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static t_bilist	*init_tpixlstar(t_bilist *pix_lst, t_pix_lst *data)
 {
-	t_bilist		*new_pix_ar;
+	t_bilist	*new_pix_ar;
 
 	if (!(new_pix_ar = init_bilist(NULL, 0)))
 		return (NULL);
 	new_pix_ar->data = data;
-	new_pix_ar->s= new_pix_ar->data->data->x;
+	new_pix_ar->s = new_pix_ar->data->data->x;
 	new_pix_ar->data = new_pix_ar->data->head;
 	if (!pix_lst)
 	{
@@ -38,13 +38,13 @@ static t_bilist	*init_tpixlstar(t_bilist *pix_lst, t_pix_lst *data)
 	return (pix_lst);
 }
 
-t_bilist	*cpy_map(t_bilist *srcs)
+t_bilist		*cpy_map(t_bilist *srcs)
 {
 	t_bilist	*cpy;
 	t_pix_lst	*pxl;
 	t_pix_lst	*pxl_cpy;
 	t_pointz	*ptz_cpy;
-	
+
 	cpy = NULL;
 	while (srcs)
 	{

@@ -6,14 +6,15 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:23:26 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 12:34:17 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:49:22 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
+#include <unistd.h>
 
-t_pix_lst	*add_px_lst(t_pix_lst **px_h, t_pointz *ptz)
+t_pix_lst			*add_px_lst(t_pix_lst **px_h, t_pointz *ptz)
 {
 	t_pix_lst	*new_px_lst;
 
@@ -38,40 +39,24 @@ t_pix_lst	*add_px_lst(t_pix_lst **px_h, t_pointz *ptz)
 	return (*px_h);
 }
 
-static t_pix_lst	*create_pxline(char **tab, int y, int color)
+static t_bilist		*fill_tpixstarend(t_bilist *pix_lst,
+t_bilist *new_pix_ar)
 {
-	int				x;
-	int				z;
-	int 			er;
-	t_pix_lst		*px_h;
-	t_pointz		*ptz;
-
-	x = 0;
-	er = 0;
-	px_h = NULL;
-	while (*tab)
+	if (pix_lst->s != new_pix_ar->s)
 	{
-		z = ft_satoi(*tab, &er);
-		if (z > 3000)
-			z = 3000;
-		else if (z < -3000)
-			z = -3000;
-		if (er < 0)
-		{
-			free_pxlst(px_h);
-			return (NULL);
-		}
-		if (!(ptz = init_tpointz(x, y, z, color)))
-			return (NULL);
-		if (!(px_h = add_px_lst(&px_h, ptz)))
-			return (NULL);
-		tab++;
-		x++;
+		free_sbilist(&new_pix_ar);
+		free_sbilist(&pix_lst);
+		return (NULL);
 	}
-	return (px_h);
+	new_pix_ar->head = pix_lst->head;
+	new_pix_ar->prev = pix_lst;
+	pix_lst->next = new_pix_ar;
+	pix_lst = new_pix_ar;
+	return (pix_lst);
 }
 
-static t_bilist	*init_tpixlstar(t_bilist *pix_lst, char **tab, int y, int color)
+static t_bilist		*init_tpixlstar(t_bilist *pix_lst,
+char **tab, int y, int color)
 {
 	t_bilist		*new_pix_ar;
 
@@ -92,21 +77,23 @@ static t_bilist	*init_tpixlstar(t_bilist *pix_lst, char **tab, int y, int color)
 	}
 	else
 	{
-		if (pix_lst->s != new_pix_ar->s)
-		{
-			free_sbilist(&new_pix_ar);
-			free_sbilist(&pix_lst);
+		if (!(pix_lst = fill_tpixstarend(pix_lst, new_pix_ar)))
 			return (NULL);
-		}
-		new_pix_ar->head = pix_lst->head;
-		new_pix_ar->prev = pix_lst;
-		pix_lst->next = new_pix_ar;
-		pix_lst = new_pix_ar;
 	}
 	return (pix_lst);
 }
 
-t_bilist		*fdf_parsing(int fd, int color, int *y)
+static void			error_parsing_prcsing(char **tab, char *line, int fd)
+{
+	free_tab(tab);
+	free(line);
+	while (get_next_line(fd, &line) > 0)
+		free(line);
+	close(fd);
+	exit(0);
+}
+
+t_bilist			*fdf_parsing(int fd, int color, int *y)
 {
 	int			er;
 	char		*line;
@@ -120,14 +107,7 @@ t_bilist		*fdf_parsing(int fd, int color, int *y)
 	{
 		tab = ft_strsplit(line, ' ');
 		if (!(pixar = init_tpixlstar(pixar, tab, *y, color)))
-		{
-			free_tab(tab);
-			free(line);
-			line = NULL;
-			while (get_next_line(fd, &line) > 0)
-				free(line);
-			exit (0);
-		}
+			error_parsing_prcsing(tab, line, fd);
 		free_tab(tab);
 		free(line);
 		line = NULL;

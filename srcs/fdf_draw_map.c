@@ -6,14 +6,14 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 21:11:37 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 12:53:57 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:03:55 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdlib.h>
 
-static void		fill_n_draw(t_window *par,t_pointz *p0, t_pointz *p1)
+static void		fill_n_draw(t_window *par, t_pointz *p0, t_pointz *p1)
 {
 	t_line	*lne;
 
@@ -26,7 +26,7 @@ void			fdf_draw_map(t_window *par, t_bilist *map)
 {
 	t_pix_lst	*pxl;
 	t_pix_lst	*par_pxl;
-	
+
 	par_pxl = NULL;
 	while (map)
 	{

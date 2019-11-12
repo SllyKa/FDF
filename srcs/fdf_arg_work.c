@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 16:37:13 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 05:56:23 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 13:49:43 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		arg_usg(char *msg)
 {
 	if (msg)
 		ft_printf("%s\n", msg);
-	ft_printf("usage: fdf file... [colors: RGB]\n");
+	ft_printf("usage: fdf [file...] [colors: RGB]\n");
 }
 
 static void		check_clrs(int argc, char **argv, int *color)
@@ -33,13 +33,13 @@ static void		check_clrs(int argc, char **argv, int *color)
 	er = 0;
 	i = 2;
 	num_cntr = 2;
-	while(argc < 6 && i < argc)
+	while (argc < 6 && i < argc)
 	{
 		num = ft_satoi(argv[i], &er);
 		if ((er < 0) || (num > 255) || (num < 0))
 		{
 			arg_usg("fdf_color: bad color");
-			exit (0);
+			exit(0);
 		}
 		i++;
 		*color |= ((*color & 0) | num) << 8 * (num_cntr);
@@ -54,13 +54,13 @@ static void		arg_check(int argc, char **argv, int *color)
 	if (argc < 2 || argc > 5)
 	{
 		arg_usg("fdf: illegal number of arguments");
-		exit (0);
+		exit(0);
 	}
 	if ((fd = open(argv[1], O_RDONLY)) < 0)
 	{
 		perror("fdf_file");
 		arg_usg(NULL);
-		exit (0);
+		exit(0);
 	}
 	if (argc > 2 && argc < 6)
 	{
@@ -72,7 +72,7 @@ static void		arg_check(int argc, char **argv, int *color)
 int				fdf_arg_process(int argc, char **argv, int *color)
 {
 	int		fd;
-	
+
 	arg_check(argc, argv, color);
 	fd = open(argv[1], O_RDONLY);
 	return (fd);

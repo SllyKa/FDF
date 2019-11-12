@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 17:11:50 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 12:16:28 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:11:56 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,24 @@ void	free_tab(char **tab)
 	h_tab = NULL;
 }
 
-void	free_sbilist(t_bilist **pxar)
+void	free_pxlst(t_pix_lst *pxl)
 {
-	t_pix_lst		*plxlst;
-	t_pix_lst		*plxtemp;
-	t_bilist		*tmp;
+	t_pix_lst	*tmp;
 
-	if (!pxar || !(*pxar))
+	if (!pxl)
 		return ;
-	if (!(*pxar)->head)
+	pxl = pxl->head;
+	while (pxl)
 	{
-		if ((*pxar)->data)
-			free_pxlst((*pxar)->data);
-		free(*pxar);
-	}
-	*pxar = (*pxar)->head;
-	while(*pxar)
-	{
-		plxlst = (*pxar)->data;
-		plxlst = plxlst->head;
-		while(plxlst)
-		{
-			if (plxlst->data)
-				free(plxlst->data);
-			plxtemp = plxlst;
-			plxlst = plxlst->next;
-			free(plxtemp);
-		}
-		tmp = *pxar;
-		*pxar = (*pxar)->next;
+		if (pxl->data)
+			free(pxl->data);
+		tmp = pxl;
+		pxl = pxl->next;
 		free(tmp);
-		tmp = NULL;
 	}
-	*pxar = NULL;
 }
 
-void	free_cntner(t_container	*box)
+void	free_cntner(t_container *box)
 {
 	if (!box)
 		return ;
@@ -99,11 +81,11 @@ void	free_line(t_line *lne)
 		return ;
 	if (lne->p0)
 		free(lne->p0);
-	if(lne->p1)
+	if (lne->p1)
 		free(lne->p1);
-	if(lne->pp0)
+	if (lne->pp0)
 		free(lne->pp0);
-	if(lne->pp1)
+	if (lne->pp1)
 		free(lne->pp1);
 	free(lne);
 }

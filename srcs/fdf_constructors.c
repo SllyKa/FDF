@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:59:45 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/11 03:52:17 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:01:21 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ t_point		*init_tpoint(int x, int y, int clr)
 	return (new_point);
 }
 
-t_pointz		*init_tpointz(double x, double y, double z, int clr)
+t_pointz	*init_tpointz(double x, double y, double z, int clr)
 {
 	t_pointz	*new_pointz;
 
-	if(!(new_pointz = (t_pointz*)malloc(sizeof(t_pointz))))
+	if (!(new_pointz = (t_pointz*)malloc(sizeof(t_pointz))))
 		return (NULL);
 	new_pointz->x = x;
 	new_pointz->y = y;
@@ -53,7 +53,7 @@ t_line		*init_tline(t_pointz *p0, t_pointz *p1)
 {
 	t_line		*new_line;
 
-	if(!(new_line = (t_line*)malloc(sizeof(t_line))))
+	if (!(new_line = (t_line*)malloc(sizeof(t_line))))
 		return (NULL);
 	new_line->p0 = p0;
 	new_line->p1 = p1;

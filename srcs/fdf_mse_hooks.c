@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 23:16:39 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 04:37:11 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:24:26 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			mse_sc(int button, int x, int y, t_container *box)
 {
 	double xx;
 	double yy;
-	
+
 	if (button == 5)
 	{
 		val_to_ptz(box->tr->scale, 1.1, 1.1, 1.1);
@@ -49,7 +49,6 @@ int			mse_rt_x(int button, int x, int y, t_container *box)
 	{
 		box->tr->angle = 0.1;
 		clear_tr_dr(box, rt_map_x);
-
 	}
 	if (button == 4)
 	{
@@ -71,7 +70,6 @@ int			mse_rt_y(int button, int x, int y, t_container *box)
 	{
 		box->tr->angle = 0.1;
 		clear_tr_dr(box, rt_map_y);
-
 	}
 	if (button == 4)
 	{
@@ -93,7 +91,6 @@ int			mse_rt_z(int button, int x, int y, t_container *box)
 	{
 		box->tr->angle = 0.1;
 		clear_tr_dr(box, rt_map_z);
-
 	}
 	if (button == 4)
 	{

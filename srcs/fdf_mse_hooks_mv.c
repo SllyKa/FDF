@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mse_hooks_mv.c                                     :+:      :+:    :+:   */
+/*   fdf_mse_hooks_mv.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 23:57:00 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 00:15:25 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:22:54 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			mse_mv_y(int button, int x, int y, t_container *box)
 		clear_tr_dr(box, mv_map);
 	}
 	if (button == 2)
-			mlx_mouse_hook(box->par->wn_ptr, mse_sc, box);
+		mlx_mouse_hook(box->par->wn_ptr, mse_sc, box);
 	return (0);
 }
 

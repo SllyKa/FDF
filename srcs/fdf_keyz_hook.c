@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:30:01 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 10:37:08 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:21:53 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int				keyz(int key, t_container *box)
 		mlx_mouse_hook(box->par->wn_ptr, mse_mv_z, box);
 	if (key == 15 || key == 34)
 		keyz_2(key, box);
-    return (0);
+	return (0);
 }
