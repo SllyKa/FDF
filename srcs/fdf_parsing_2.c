@@ -6,12 +6,18 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:29:46 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/13 15:12:30 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:43:32 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
+
+static int	free_ret(char *hex)
+{
+	free(hex);
+	return (-1);
+}
 
 static int	pars_hex(char *pntr, int *clr)
 {
@@ -24,17 +30,18 @@ static int	pars_hex(char *pntr, int *clr)
 	while (*pntr)
 	{
 		if (i >= 8)
-			return (-1);
+			return (free_ret(hex));
 		if (!((*pntr >= '0' && *pntr <= '9') ||
 		(*pntr >= 'A' && *pntr <= 'F') || (*pntr >= 'a' && *pntr <= 'f')))
-			return (-1);
+			return (free_ret(hex));
 		hex[i] = *pntr;
 		hex[i + 1] = '\0';
 		i++;
 		pntr++;
 	}
 	if (ft_hextodec(hex, clr) < 0)
-		return (-1);
+		return (free_ret(hex));
+	free(hex);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 11:33:28 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 14:55:59 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:49:05 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	check_oneline(t_bilist **pxar)
 	{
 		if ((*pxar)->data)
 			free_pxlst((*pxar)->data);
+		free(*pxar);
 		return (-1);
 	}
 	else
