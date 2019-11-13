@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:26:06 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 17:57:10 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:14:44 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct	s_point
 {
 	int		x;
 	int		y;
-	int 	clr;
+	int		clr;
 }				t_point;
 
 typedef struct	s_pointz
@@ -61,7 +61,7 @@ typedef struct	s_line
 	t_point		*pp1;
 }				t_line;
 
-typedef struct s_transfrm
+typedef struct	s_transfrm
 {
 	t_pointz	*start;
 	t_pointz	*scale;
@@ -77,8 +77,6 @@ typedef struct	s_container
 	t_transfrm	*tr;
 	double		y;
 }				t_container;
-
-
 
 t_window		*init_tcont(int x, int y, char *name);
 t_point			*init_tpoint(int x, int y, int clr);
@@ -121,6 +119,7 @@ void			reset_map(t_container *box);
 void			put_bold_px(t_window *par, int x, int y, int clr);
 t_pix_lst		*create_pxline(char **tab, int y, int color);
 int				ft_psatoi(const char *str, int *er_cod, char **lstpntr);
+int				ft_hextodec(char *hex, int *dec);
 
 int				mse_sc(int button, int x, int y, t_container *box);
 int				mse_rt_x(int button, int x, int y, t_container *box);
@@ -135,6 +134,6 @@ void			free_sbilist(t_bilist **pxar);
 void			free_line(t_line *lne);
 void			free_stransfrm(t_transfrm **tr);
 void			free_cntner(t_container	*box);
-void			free_pxlst(t_pix_lst * pxl);
+void			free_pxlst(t_pix_lst *pxl);
 
 #endif

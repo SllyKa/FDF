@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:30:23 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 14:27:05 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/13 14:43:23 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ t_transfrm		*start_map(t_bilist *map, double y)
 	scl = init_tpointz(30, 30, 30, 0);
 	while (((int)(800 + map->s / 2) +
 	(800 - (int)(800 + map->s / 2)) * scl->x) < 0)
-		val_to_ptz(scl, scl->x - 5, scl->y - 5, scl->z - 5);
+		val_to_ptz(scl, scl->x - 1, scl->y - 1, scl->z - 1);
+	while (((int)(600 + y / 2) +
+	(600 - (int)(600 + y / 2)) * scl->y) < 0)
+		val_to_ptz(scl, scl->x - 1, scl->y - 1, scl->z - 1);
+	while (((int)(50 + 50 / 2) +
+	(50 - (int)(50 + 50 / 2)) * scl->z) < 0)
+		val_to_ptz(scl, scl->x - 1, scl->y - 1, scl->z - 1);
 	tr = init_transfrm(init_tpointz(800 + map->s / 2, 600 + y / 2, 50, 0), scl,
 	init_tpointz(800, 600, 50, 0), 0.1);
 	tr->map_cpy = cpy_map(map);

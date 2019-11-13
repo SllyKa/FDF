@@ -6,7 +6,7 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 17:49:42 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 18:35:11 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:12:10 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*ft_psatoi_top(char *str, int *sign, long int *res)
 	return (str);
 }
 
-int		ft_psatoi(char *str, int *er_cod, char **lstpntr)
+int			ft_psatoi(char *str, int *er_cod, char **lstpntr)
 {
 	long int	res;
 	int			sign;
@@ -34,9 +34,9 @@ int		ft_psatoi(char *str, int *er_cod, char **lstpntr)
 	str = ft_psatoi_top(str, &sign, &res);
 	if (*str < '0' || *str > '9')
 	{
-		 *er_cod = -3;
-		 *lstpntr = str;
-		 return (0);
+		*er_cod = -3;
+		*lstpntr = str;
+		return (0);
 	}
 	while (*str >= '0' && *str <= '9')
 	{

@@ -6,67 +6,54 @@
 /*   By: gbrandon <gbrandon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:29:46 by gbrandon          #+#    #+#             */
-/*   Updated: 2019/11/12 18:58:48 by gbrandon         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:12:30 by gbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
 
-static void	poww(int *base)
+static int	pars_hex(char *pntr, int *clr)
 {
-	int i;
+	char	*hex;
+	int		i;
 
 	i = 0;
-	*base = 1;
-	while (i < 6)
+	if (!(hex = (char*)malloc(sizeof(char) * 9)))
+		exit(0);
+	while (*pntr)
 	{
-		*base *= 16;
+		if (i >= 8)
+			return (-1);
+		if (!((*pntr >= '0' && *pntr <= '9') ||
+		(*pntr >= 'A' && *pntr <= 'F') || (*pntr >= 'a' && *pntr <= 'f')))
+			return (-1);
+		hex[i] = *pntr;
+		hex[i + 1] = '\0';
 		i++;
+		pntr++;
 	}
-}
-
-static int	chk_base(char *pntr, int *base, int *clr)
-{
-	if (*pntr >= '0' && *pntr <= '9')
-	{
-		*clr += (*pntr - 48) * *base;
-		*base = *base / 16;
-	}
-	else if (*pntr >= 'A' && *pntr <= 'F')
-	{
-		*clr += (*pntr - 55) * *base;
-		*base = *base / 16;
-	}
-	else
+	if (ft_hextodec(hex, clr) < 0)
 		return (-1);
 	return (0);
 }
 
 static int	get_hex(char *pntr, int *color)
 {
-	int		i;
 	int		clr;
-	int		base;
 
-	i = 0;
 	clr = 0;
-	poww(&base);
 	pntr++;
-	if (*pntr != '\0' && *(pntr + 1) != '\0' && *pntr == '0' && *(pntr + 1) == 'x')
+	if (*pntr != '\0' && *(pntr + 1) != '\0' &&
+	*pntr == '0' && *(pntr + 1) == 'x')
 	{
 		pntr = pntr + 2;
-			while (i < 6 && *pntr)
-			{
-				if (chk_base(pntr, &base, &clr))
-					return (-1);
-				i++;
-				pntr++;
-			}
+		if (pars_hex(pntr, &clr) < 0)
+			return (-1);
+		*color = clr;
 	}
-	if (*pntr != '\0')
+	else
 		return (-1);
-	*color = clr;
 	return (0);
 }
 
